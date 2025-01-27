@@ -54,7 +54,7 @@ module vs(
 	output reg signed [19:0] y_screen_v1,	
 	output reg signed [19:0] y_screen_v2,
 	output reg signed [19:0] y_screen_v3,
-	output reg signed [19:0] e0_init_t1,		// change per line, int20
+	output reg signed [19:0] e0_init_t1,		// change per line, int20; compute initial values for edge equations to define traingle's boundaries
 	output reg signed [19:0] e1_init_t1,
 	output reg signed [19:0] e2_init_t1,
 	output reg signed [19:0] e0_init_t2,		// change per line, int20
