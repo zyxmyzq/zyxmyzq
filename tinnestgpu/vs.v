@@ -13,7 +13,7 @@
 module vs(
 	input clk, 		
 	input reset,
-  // from vga to receive the model 2D points (3D points for 3D)
+  // from vga represents VGA coordinates; to receive the model 2D points (3D points for 3D)
 	input [9:0] x,
 	input [9:0] y,
 	// from top, set by IA
@@ -36,7 +36,7 @@ module vs(
   input signed [15:0] light_x,			// Q8.8 for light source positions, shading
 	input signed [15:0] light_y,
 	input signed [15:0] light_z,
-	input signed [15:0] vp_00,				// Q8.8
+	input signed [15:0] vp_00,				// Q8.8, view projection matrix
 	input signed [15:0] vp_01,
 	input signed [15:0] vp_02,
 	input signed [15:0] vp_03,
@@ -50,7 +50,7 @@ module vs(
 	input signed [15:0] vp_33,
 	// to raster
 	output reg [1:0] intensity,					// 2-bit intensity for each tri							
-	output reg signed [19:0] y_screen_v0,		// change per frame, int20		
+	output reg signed [19:0] y_screen_v0,		// change per frame, int20 ; screen space vertices		
 	output reg signed [19:0] y_screen_v1,	
 	output reg signed [19:0] y_screen_v2,
 	output reg signed [19:0] y_screen_v3,
@@ -84,7 +84,7 @@ module vs(
 	reg signed [15:0] w_clip_v1;
 	reg signed [15:0] w_clip_v2;
 	reg signed [15:0] w_clip_v3;
-	reg signed [15:0] x_ndc_v0;					// Q2.14
+	reg signed [15:0] x_ndc_v0;					// Q2.14; normalized device coordinates
 	reg signed [15:0] x_ndc_v1;	
 	reg signed [15:0] x_ndc_v2;	
 	reg signed [15:0] x_ndc_v3;	
@@ -92,8 +92,8 @@ module vs(
 	reg signed [15:0] y_ndc_v1;	
 	reg signed [15:0] y_ndc_v2;	
 	reg signed [15:0] y_ndc_v3;				
-	reg signed [19:0] x_screen_v0_buff1;		// int20
-	reg signed [19:0] y_screen_v0_buff1;
+	reg signed [19:0] x_screen_v0_buff1;		// int20; convert NDC to screen space by scaling and offset based on screen resolution. 
+	reg signed [19:0] y_screen_v0_buff1;		// Buffers intermediate results to manage pipeline stages and ensure the proper sequence of operations.
 	reg signed [19:0] x_screen_v1_buff1;		
 	reg signed [19:0] y_screen_v1_buff1;
 	reg signed [19:0] x_screen_v2_buff1;		
